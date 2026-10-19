@@ -33,16 +33,17 @@ try {
 
     # Ширины колонок по названию в шапке (Word при вставке HTML их не берёт); неизвестная колонка — вес 20
     $weights = @{
-        '№' = 6; 'Функция' = 27; 'Как сейчас' = 20; 'Как в 1С' = 33; 'Заключение' = 14; 'Комментарий' = 20
+        '№' = 6; 'Функция' = 27; 'Как сейчас' = 20; 'Как в 1С' = 33; 'Заключение' = 17; 'Комментарий' = 20
         'Дата' = 15; 'Что смотрели' = 50; 'Участники' = 35
         'Что нужно Заказчику' = 30; 'Как в типовой' = 28; 'Что предлагаем' = 36
         'Что передать или решить' = 52; 'Строки реестра' = 13; 'Кто' = 18; 'Срок' = 11
         'Роль' = 34; 'ФИО' = 34; 'Подпись' = 16
-        'Требование Заказчика' = 29; 'Реализация в Программе' = 34; 'Примечание' = 18
+        'Требование Заказчика' = 29; 'Реализация в Программе' = 31; 'Примечание' = 18
         'Термин' = 22; 'Определение' = 78
         'Наименование' = 40; 'Содержание' = 42; 'Основание' = 14; 'Ответственный' = 18
     }
     $ps = $doc.PageSetup
+    $ps.BottomMargin = 85                   # 3 см: плашка 1bit.kz в нижнем колонтитуле выше поля бланка (2 см)
     $total = $ps.PageWidth - $ps.LeftMargin - $ps.RightMargin - 2
     foreach ($t in $doc.Tables) {
         $t.AllowAutoFit = $false
@@ -50,7 +51,7 @@ try {
         $t.Range.ParagraphFormat.SpaceAfter = 0
         $t.Range.ParagraphFormat.LineSpacingRule = 0   # одинарный
         $t.TopPadding = 1; $t.BottomPadding = 1; $t.LeftPadding = 3; $t.RightPadding = 3
-        $t.Rows.AllowBreakAcrossPages = $true
+        $t.Rows.AllowBreakAcrossPages = $false   # строка целиком на одной странице
         $t.Rows.Item(1).HeadingFormat = -1  # шапка таблицы повторяется на каждой странице
 
         $head = $t.Rows.Item(1).Cells
@@ -67,9 +68,10 @@ try {
             if ($cells.Count -eq $n) {
                 for ($i = 1; $i -le $n; $i++) { $cells.Item($i).Width = $pt[$i - 1] }
             }
-            elseif ($cells.Count -eq 1) { $cells.Item(1).Width = $total }
+            elseif ($cells.Count -eq 1) { $cells.Item(1).Width = $total; $row.Range.ParagraphFormat.KeepWithNext = $true }
             else {
-                # строка группы: первая колонка как в шапке, остальное — одной ячейкой
+                # строка группы: первая колонка как в шапке, остальное — одной ячейкой; не отрывать от следующей строки
+                $row.Range.ParagraphFormat.KeepWithNext = $true
                 $cells.Item(1).Width = $pt[0]
                 for ($i = 2; $i -le $cells.Count; $i++) { $cells.Item($i).Width = ($total - $pt[0]) / ($cells.Count - 1) }
             }
