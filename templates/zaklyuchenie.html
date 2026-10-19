@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Заключение по результатам обследования</title>
+<!-- Шаблон для сборки в Word (tools\build-docx.ps1). Стили не менять — только содержимое. -->
+<style>
+  body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.3; color: #000; }
+  h1 { font-size: 18pt; color: #C00000; margin: 0 0 6pt 0; }
+  h2 { font-size: 13pt; color: #C00000; margin: 16pt 0 6pt 0; page-break-after: avoid; }
+  h3 { font-size: 11pt; margin: 10pt 0 4pt 0; page-break-after: avoid; }
+  p { margin: 0 0 6pt 0; }
+  .title-meta { color: #555; margin-bottom: 18pt; }
+  table { border-collapse: collapse; width: 100%; margin: 4pt 0 10pt 0; }
+  th, td { border: 1px solid #808080; padding: 3pt 4pt; vertical-align: top; font-size: 9pt; }
+  th { background: #D9D9D9; font-weight: bold; text-align: left; }
+  tr.group td { background: #F2F2F2; font-weight: bold; }
+  tr.subgroup td { font-weight: bold; font-style: italic; }
+  td.num { white-space: nowrap; width: 6%; }
+  td.c { text-align: center; }
+  .note { font-size: 9pt; color: #555; }
+  ul { margin: 0 0 6pt 18pt; padding: 0; }
+</style>
+</head>
+<body>
+
+<h1>Заключение по результатам обследования</h1>
+<p class="title-meta">{{Продукт}} для {{Клиент}}<br>Исполнитель: ТОО «Первый БИТ»<br>{{ДД.ММ.ГГГГ}}</p>
+
+<h2>1. Цель и периметр</h2>
+<p>{{Текст}}</p>
+
+<h2>2. Итоги</h2>
+<table>
+  <tr><th>Заключение</th><th>Функций</th></tr>
+  <tr><td>Типовое</td><td class="c">{{N}}</td></tr>
+  <tr><td>Меняем процесс</td><td class="c">{{N}}</td></tr>
+  <tr><td>Доработка</td><td class="c">{{N}}</td></tr>
+  <tr><td>Вне системы</td><td class="c">{{N}}</td></tr>
+  <tr><td>Открытые вопросы</td><td class="c">{{N}}</td></tr>
+  <tr><td><b>Всего</b></td><td class="c"><b>{{N}}</b></td></tr>
+</table>
+<h3>Критичные разрывы</h3>
+<ul><li>{{…}}</li></ul>
+<h3>Что изменить в работе</h3>
+<ul><li>{{…}}</li></ul>
+
+<h2>3. Реестр функций</h2>
+<table>
+  <tr><th>№</th><th>Функция</th><th>Как сейчас</th><th>Как в 1С</th><th>Заключение</th><th>Приоритет</th><th>Комментарий</th></tr>
+  <tr class="group"><td class="num">1</td><td colspan="6">{{Участок}}</td></tr>
+  <tr class="subgroup"><td class="num">1.1</td><td colspan="6">{{Процесс}}</td></tr>
+  <tr><td class="num">1.1.1</td><td>{{…}}</td><td>{{…}}</td><td>{{…}}</td><td>{{…}}</td><td class="c">{{К/Т/—}}</td><td>{{…}}</td></tr>
+</table>
+<p class="note">Приоритет: К — критично, без этого нельзя начать работу в системе; Т — желательно, можно начать работу без этого.</p>
+
+<h2>4. Разрывы и решения</h2>
+<h3>{{№}}. {{Функция}}</h3>
+<p><b>Что нужно:</b> {{…}}</p>
+<p><b>Как в 1С:</b> {{…}}</p>
+<p><b>Предлагаем:</b> {{…}}</p>
+
+<h2>5. Открытые вопросы</h2>
+<table>
+  <tr><th>№</th><th>Вопрос</th><th>Строка реестра</th><th>Кто отвечает</th></tr>
+  <tr><td class="num">1</td><td>{{…}}</td><td>{{…}}</td><td>{{…}}</td></tr>
+</table>
+
+<h2>6. Следующие шаги</h2>
+<ul><li>{{…}}</li></ul>
+
+<h2>7. Лист согласования</h2>
+<table>
+  <tr><th>Роль</th><th>ФИО</th><th>Подпись</th><th>Дата</th></tr>
+  <tr class="group"><td colspan="4">Заказчик</td></tr>
+  <tr><td>{{…}}</td><td>{{…}}</td><td></td><td></td></tr>
+  <tr class="group"><td colspan="4">Исполнитель</td></tr>
+  <tr><td>{{…}}</td><td>{{…}}</td><td></td><td></td></tr>
+</table>
+
+</body>
+</html>
